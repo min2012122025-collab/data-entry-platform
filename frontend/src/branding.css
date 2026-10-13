@@ -1,0 +1,17 @@
+.login-visual { background: #173e50 url('/assets/login-landscape-v1.png') center center / cover no-repeat; }
+.login-visual::after { background: linear-gradient(180deg, rgba(8, 31, 45, .42), rgba(8, 31, 45, .12) 45%, rgba(5, 25, 38, .64)); }
+.login-brand h1 { text-shadow: 0 2px 20px rgba(0, 22, 36, .24); }
+.login-department .brand-ring { width: 56px; height: 56px; background-color: white; background-size: contain; }
+.login-brand h1 { font-size: clamp(32px, 4vw, 56px); overflow-wrap: anywhere; }
+.brand-ring { background-color: white; background-size: contain; }
+.brand-copy strong { overflow-wrap: anywhere; }
+#brand-settings { margin: 0 0 20px; padding: 18px; border: 1px solid #d9e2ed; border-radius: 12px; background: white; }
+#brand-settings summary { cursor: pointer; font-weight: 600; }
+.brand-settings-form, .brand-logo-settings { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+.brand-settings-form label { display: grid; gap: 6px; flex: 1; min-width: 160px; max-width: 420px; }
+#brand-settings input:not([type=file]) { border: 1px solid #cad5e2; border-radius: 6px; padding: 10px; font: inherit; width: 100%; }
+#brand-settings button, .brand-upload { border: 1px solid #cad5e2; border-radius: 6px; padding: 10px 14px; background: #f6f9fc; color: #17395d; font: inherit; cursor: pointer; }
+.brand-upload input { display: block; margin-top: 8px; max-width: 230px; }
+.brand-logo-settings img { object-fit: contain; border: 1px solid #e5ebf2; border-radius: 8px; }
+.brand-help, #brand-settings [role=status] { font-size: 13px; margin-top: 12px; color: #52657a; }
+#brand-settings [disabled] { opacity: .6; cursor: wait; }
