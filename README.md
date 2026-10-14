@@ -2,6 +2,10 @@
 
 支持 Excel 模板管理、月度填报任务、负责人分配、数据校验、导入预览、数据库字段映射和操作审计。管理员可以上传自己的品牌图片、更换平台名称。
 
+## Docker 部署
+
+使用 `python3 docker-setup.py` 生成独立配置，然后运行 `docker compose --env-file .env.docker up -d --build`。正式访问需要 HTTPS，详细步骤、备份和离线部署见 [Docker 部署说明](DOCKER.md)。
+
 ## 环境
 
 - Python 3.11 或更新版本

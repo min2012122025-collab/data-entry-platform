@@ -1,0 +1,48 @@
+services:
+  app:
+    image: data-entry-platform:${ENTRY_IMAGE_TAG:-v1.0.0}
+    build: .
+    restart: unless-stopped
+    init: true
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${ENTRY_HTTP_PORT:-8125}:8125"
+    environment:
+      ENTRY_ENV: production
+      ENTRY_DATABASE_URL: mysql+pymysql://entry:${ENTRY_MYSQL_PASSWORD:?Run docker/setup.py first}@db/data_entry?charset=utf8mb4
+      ENTRY_EXPECTED_DATABASE: data_entry
+      ENTRY_DATA_DIR: /var/lib/data-entry
+      ENTRY_UPLOAD_DIR: /var/lib/data-entry/uploads
+      ENTRY_SOURCE_DIR: /var/lib/data-entry/templates
+      ENTRY_SECRET_KEY: ${ENTRY_SECRET_KEY:?Run docker/setup.py first}
+      ENTRY_SEED_PASSWORD_ADMIN: ${ENTRY_SEED_PASSWORD_ADMIN:?Run docker/setup.py first}
+      ENTRY_COOKIE_SECURE: "1"
+      ENTRY_EXTERNAL_WRITES_ENABLED: "0"
+      ENTRY_FORWARDED_ALLOW_IPS: ${ENTRY_FORWARDED_ALLOW_IPS:-127.0.0.1}
+    volumes:
+      - app_data:/var/lib/data-entry
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: data_entry
+      MYSQL_USER: entry
+      MYSQL_PASSWORD: ${ENTRY_MYSQL_PASSWORD:?Run docker/setup.py first}
+      MYSQL_ROOT_PASSWORD: ${ENTRY_MYSQL_ROOT_PASSWORD:?Run docker/setup.py first}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_PASSWORD mysql -h 127.0.0.1 -u entry -D data_entry -e 'SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+volumes:
+  app_data:
+  mysql_data:

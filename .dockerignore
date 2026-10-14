@@ -1,0 +1,14 @@
+**
+!backend/
+!backend/requirements.txt
+!backend/app/
+!backend/app/**
+!database/
+!database/**
+!frontend/
+!frontend/dist/
+!frontend/dist/**
+!run.sh
+!docker-entrypoint.sh
+**/__pycache__/
+**/*.pyc
